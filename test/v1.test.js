@@ -1,5 +1,5 @@
 import { assert, test } from 'vitest';
-import api from '../src/cbf.js';
+import api from '../src/cbf.mjs';
 
 test('fetch schedule', async () => {
     const data = await api.getSchedule();

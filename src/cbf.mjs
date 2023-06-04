@@ -1,15 +1,17 @@
-import 'dotenv/config'
-import axios from 'axios';
+import dotenv from 'dotenv'
+import axios from 'axios'
 
-const apiUrl = import.meta.env.XDIO_API_URL;
-const apiToken = import.meta.env.XDIO_API_TOKEN;
+dotenv.config()
+
+const apiUrl = process.env.XDIO_API_URL
+const apiToken = process.env.XDIO_API_TOKEN
 
 let apiOptions = {
     headers: {
         'Accept': 'application/json',
         'Authorization': (apiToken ? 'Bearer ' + apiToken : null)
     }
-};
+}
 
 const apiFetch = async function (url) {
 
