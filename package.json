@@ -1,6 +1,6 @@
 {
   "name": "xdio-api-js",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "",
   "exports": {
     "./cbf": "./src/cbf.mjs"
