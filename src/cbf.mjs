@@ -1,21 +1,31 @@
 import dotenv from 'dotenv'
 import axios from 'axios'
 
-dotenv.config()
+let apiUrl = '';
+let apiToken = '';
 
-const apiUrl = process.env.XDIO_API_URL
-const apiToken = process.env.XDIO_API_TOKEN
+const getApiHeaders = function() {
+    return {
+        headers: {
+            'Accept': 'application/json',
+            'Authorization': (apiToken ? 'Bearer ' + apiToken : null)
+        }
+    };
+}
 
-let apiOptions = {
-    headers: {
-        'Accept': 'application/json',
-        'Authorization': (apiToken ? 'Bearer ' + apiToken : null)
-    }
+const setApiUrl = function(url) {
+
+    return apiUrl = url;
+}
+
+const setApiToken = function (token) {
+
+    return apiToken = token;
 }
 
 const apiFetch = async function (url) {
 
-    return await fetch(url, apiOptions)
+    return await fetch(url, getApiHeaders())
         .then((response) => {
             if (response.status === 401) {
                 console.log('Invalid API Token.');
@@ -27,52 +37,52 @@ const apiFetch = async function (url) {
         // .then((error) => console.log('Error.', JSON.stringify(error)));
 }
 
-export const getSchedule = async function (region = 8) {
+const getSchedule = async function (region = 8) {
 
     return await apiFetch(apiUrl + '/v1/schedule?region=' + region);
 }
 
-export const getShows = async function (key = 'premiere', region = '8') {
+const getShows = async function (key = 'premiere', region = '8') {
 
     return await apiFetch(apiUrl + '/v1/shows?key=' + key + '&region=' + region);
 }
 
-export const getShow = async function (id, page = 1) {
+const getShow = async function (id, page = 1) {
 
     return await apiFetch(apiUrl + '/v1/episodes?id=' + id + '&page=' + page);
 }
 
-export const getMedias = async function (id) {
+const getMedias = async function (id) {
 
     return await apiFetch(apiUrl + '/v1/segments?id=' + id + '&unique=1');
 }
 
-export const getMedia = async function (id = 0) {
+const getMedia = async function (id = 0) {
 
     return await apiFetch(apiUrl + '/v1/media?id=' + id);
 }
 
-export const getLivestream = async function (id = 0) {
+const getLivestream = async function (id = 0) {
 
     return await apiFetch(apiUrl + '/v1/livestream?id=' + id);
 }
 
-export const getRss = async function () {
+const getRss = async function () {
 
     return await apiFetch(apiUrl + '/v2/rss');
 }
 
-export const getRssExtra = async function () {
+const getRssExtra = async function () {
 
     return await apiFetch(apiUrl + '/v2/rss?extra=1');
 }
 
-export const getRssShow = async function (id) {
+const getRssShow = async function (id) {
 
     return await apiFetch(apiUrl + '/v2/rss/show/' + id);
 }
 
-export const getStats = async function () {
+const getStats = async function () {
 
     return await apiFetch(apiUrl + '/v2/stats');
 }
@@ -90,7 +100,17 @@ async function f(url, options) {
     // return data;
 }
 
+// Load dotenv by default if available.
+if (typeof process === 'object') {
+    dotenv.config();
+    setApiUrl(process.env.XDIO_API_URL);
+    setApiToken(process.env.XDIO_API_TOKEN);
+}
+
 export default {
+    setApiUrl,
+    setApiToken,
+    apiFetch,
     getSchedule,
     getShows,
     getShow,
