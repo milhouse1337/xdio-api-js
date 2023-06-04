@@ -2,7 +2,9 @@
   "name": "xdio-api-js",
   "version": "1.0.1",
   "description": "",
-  "main": "main.js",
+  "exports": {
+    "./": "./src/"
+  },
   "scripts": {
     "test": "vitest"
   },
