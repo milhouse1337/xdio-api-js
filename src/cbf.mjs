@@ -4,7 +4,7 @@ import axios from 'axios'
 let apiUrl = '';
 let apiToken = '';
 
-const getApiHeaders = function() {
+const getApiHeaders = function () {
     return {
         headers: {
             'Accept': 'application/json',
@@ -13,7 +13,7 @@ const getApiHeaders = function() {
     };
 }
 
-const setApiUrl = function(url) {
+const setApiUrl = function (url) {
 
     return apiUrl = url;
 }
@@ -34,7 +34,7 @@ const apiFetch = async function (url) {
             return response.json();
         })
         .catch((error) => console.log('Error.', JSON.stringify(error)));
-        // .then((error) => console.log('Error.', JSON.stringify(error)));
+    // .then((error) => console.log('Error.', JSON.stringify(error)));
 }
 
 const getSchedule = async function (region = 8) {
@@ -50,6 +50,11 @@ const getShows = async function (key = 'premiere', region = '8') {
 const getShow = async function (id, page = 1) {
 
     return await apiFetch(apiUrl + '/v1/episodes?id=' + id + '&page=' + page);
+}
+
+const getSegments = async function (id) {
+
+    return await apiFetch(apiUrl + '/v1/segments?id=' + id);
 }
 
 const getMedias = async function (id) {
@@ -114,6 +119,7 @@ export default {
     getSchedule,
     getShows,
     getShow,
+    getSegments,
     getMedias,
     getMedia,
     getLivestream,

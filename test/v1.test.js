@@ -23,7 +23,27 @@ test('fetch show (episodes)', async () => {
     assert.equal(data.items.length, 25);
 })
 
-test('fetch episode (segments)', async () => {
+test('fetch segments', async () => {
+    const data = await api.getSegments(706018);
+
+    assert.ok(data);
+    assert.equal(data[0].title, "Sommaire de l'émission avec Annie Desrochers et tour de table");
+    assert.equal(data[0].mediaId, 8764331);
+    assert.equal(data[0].seekTime, 0);
+    assert.equal(data[0].duration, 846);
+})
+
+test('fetch segments (new)', async () => {
+    const data = await api.getSegments(738448);
+
+    assert.ok(data);
+    assert.equal(data[0].title, "Sommaire de l'émission avec Annie Desrochers et tour de table");
+    assert.equal(data[0].mediaId, 10106108);
+    assert.equal(data[0].seekTime, 0);
+    assert.equal(data[0].duration, 807);
+})
+
+test('fetch episode (unique segments)', async () => {
     const data = await api.getMedias(706018);
 
     assert.ok(data);
