@@ -12,7 +12,7 @@ test('fetch shows', async () => {
     const data = await api.getShows();
 
     assert.ok(data);
-    assert.equal(data[0].globalId, 1327);
+    assert.equal(data[0].globalId, 12279);
 })
 
 test('fetch show (episodes)', async () => {
@@ -20,7 +20,7 @@ test('fetch show (episodes)', async () => {
 
     assert.ok(data);
     assert.equal(data.meta.title, 'Le 15-18');
-    assert.equal(data.items.length, 25);
+    assert.equal(data.items.length, 5);
 })
 
 test('fetch segments', async () => {

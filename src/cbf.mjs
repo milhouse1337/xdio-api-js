@@ -25,16 +25,19 @@ const setApiToken = function (token) {
 
 const apiFetch = async function (url) {
 
-    return await fetch(url, getApiHeaders())
-        .then((response) => {
-            if (response.status === 401) {
-                console.log('Invalid API Token.');
-                return [];
-            }
-            return response.json();
-        })
-        .catch((error) => console.log('Error.', JSON.stringify(error)));
-    // .then((error) => console.log('Error.', JSON.stringify(error)));
+    const response = await fetch(url, getApiHeaders());
+
+    // Fail loud on any non-2xx response. Previously a 401 was silently turned
+    // into [] and every other error (429 Too Many Requests, 5xx, ...) fell
+    // through to response.json(), returning an error body with no usable shape.
+    // Callers then crashed far away with cryptic errors like
+    // "Cannot read properties of undefined (reading 'title')". Throwing here
+    // surfaces the real cause (status + url) at the point of failure.
+    if (!response.ok) {
+        throw new Error(`xdio-api: HTTP ${response.status} ${response.statusText} for ${url}`);
+    }
+
+    return response.json();
 }
 
 const getSchedule = async function (region = 8) {
