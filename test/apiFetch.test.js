@@ -19,3 +19,16 @@ test('apiFetch throws on a non-2xx response (e.g. 429)', async () => {
 
     await expect(api.apiFetch('/v2/rss/show/1327')).rejects.toThrow('HTTP 429');
 });
+
+test('getRssShows calls /v2/rss/shows and returns the parsed payload', async () => {
+    let calledUrl = null;
+    vi.stubGlobal('fetch', vi.fn(async (url) => {
+        calledUrl = url;
+        return new Response('{"shows":{"13493":{"meta":{"title":"x"},"items":[]}},"generated_at":"2026-06-21T00:00:00Z"}', { status: 200 });
+    }));
+
+    const data = await api.getRssShows();
+
+    expect(calledUrl).toContain('/v2/rss/shows');
+    expect(data.shows['13493'].meta.title).toBe('x');
+});

@@ -20,7 +20,7 @@ test('fetch show (episodes)', async () => {
 
     assert.ok(data);
     assert.equal(data.meta.title, 'Le 15-18');
-    assert.equal(data.items.length, 5);
+    assert.equal(data.items.length, 25);
 })
 
 test('fetch segments', async () => {
@@ -65,4 +65,3 @@ test('fetch live', async () => {
     assert.equal(data['url'], 'https://rcavliveaudio.akamaized.net/hls/live/2006635/P-2QMTL0_MTL/master.m3u8');
     assert.equal(data['type'], 'hls');
 })
-

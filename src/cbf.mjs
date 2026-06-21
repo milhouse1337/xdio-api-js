@@ -90,6 +90,13 @@ const getRssShow = async function (id) {
     return await apiFetch(apiUrl + '/v2/rss/show/' + id);
 }
 
+const getRssShows = async function (params = {}) {
+
+    const qs = new URLSearchParams(params).toString();
+
+    return await apiFetch(apiUrl + '/v2/rss/shows' + (qs ? '?' + qs : ''));
+}
+
 const getStats = async function () {
 
     return await apiFetch(apiUrl + '/v2/stats');
@@ -129,5 +136,6 @@ export default {
     getRss,
     getRssExtra,
     getRssShow,
+    getRssShows,
     getStats,
 };
